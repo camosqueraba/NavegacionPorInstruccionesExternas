@@ -116,9 +116,7 @@ namespace NavegacionPorInstruccionesExternas
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            GestorConfiguracionesExternas gestorConfiguracionesExternas = new GestorConfiguracionesExternas();
             
-            ConfiguracionesNavegacion configuracionesNavegacion = gestorConfiguracionesExternas.LeerConfiguracionesNavegacion();
             LogicaNavegacion.Instance.Navegar();
         }
     }

@@ -11,6 +11,8 @@ namespace NavegacionPorInstruccionesExternas.DTOs
         public string TipoAccion {  get; set; }
         public string TipoLocalizador { get; set; }
         public string Localizador { get; set; }
+        public string NombreLocalizador { get; set; }
+        public string TextoDigitado { get; set; }
         public string ContenidoRetornado {  get; set; }
     }
 }

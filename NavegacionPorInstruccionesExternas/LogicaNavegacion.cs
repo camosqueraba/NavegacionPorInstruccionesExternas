@@ -50,9 +50,16 @@ namespace NavegacionPorInstruccionesExternas
             GestorConfiguracionesExternas gestorConfiguracionesExternas = new GestorConfiguracionesExternas();
             ConfiguracionesNavegacion configuracionesNavegacion = gestorConfiguracionesExternas.LeerConfiguracionesNavegacion();
             InstruccionesNavegacion instruccionesNavegacion = configuracionesNavegacion.Navegaciones[0];
-            
-            bool canContinue = false;
-            canContinue = SeleniumCommands.Visit("Pagina login Gera", new Uri("https://www.google.com/"));
+
+            GestorNavegaciones gestorNavegaciones = new GestorNavegaciones(SeleniumCommands);
+            gestorNavegaciones.EjecutarInstruccionesNavegacion(instruccionesNavegacion);
+           /*
+            GestorConfiguracionesExternas gestorConfiguracionesExternas = new GestorConfiguracionesExternas();
+            ConfiguracionesNavegacion configuracionesNavegacion = gestorConfiguracionesExternas.LeerConfiguracionesNavegacion();
+           */
+
+            //bool canContinue = false;
+            //canContinue = SeleniumCommands.Visit("Pagina login Gera", new Uri("https://www.google.com/"));
         }
     }
 }
