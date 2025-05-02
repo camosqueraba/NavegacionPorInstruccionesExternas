@@ -1,4 +1,6 @@
-﻿using NavegacionPorInstruccionesExternas.Controllers;
+﻿using NavegacionPorInstruccionesExternas.Controller;
+using NavegacionPorInstruccionesExternas.Controllers;
+using NavegacionPorInstruccionesExternas.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -45,6 +47,10 @@ namespace NavegacionPorInstruccionesExternas
 
         public void Navegar()
         {
+            GestorConfiguracionesExternas gestorConfiguracionesExternas = new GestorConfiguracionesExternas();
+            ConfiguracionesNavegacion configuracionesNavegacion = gestorConfiguracionesExternas.LeerConfiguracionesNavegacion();
+            InstruccionesNavegacion instruccionesNavegacion = configuracionesNavegacion.Navegaciones[0];
+            
             bool canContinue = false;
             canContinue = SeleniumCommands.Visit("Pagina login Gera", new Uri("https://www.google.com/"));
         }

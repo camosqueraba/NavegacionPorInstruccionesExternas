@@ -8,6 +8,6 @@ namespace NavegacionPorInstruccionesExternas.DTOs
 {
     public class ConfiguracionesNavegacion
     {
-        public List<InstruccionesNavegacion> InstruccionesNavegacion {  get; set; }        
+        public List<InstruccionesNavegacion> Navegaciones {  get; set; }        
     }
 }

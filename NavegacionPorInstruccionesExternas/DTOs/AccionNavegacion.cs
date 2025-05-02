@@ -8,5 +8,9 @@ namespace NavegacionPorInstruccionesExternas.DTOs
 {
     public class AccionNavegacion
     {
+        public string TipoAccion {  get; set; }
+        public string TipoLocalizador { get; set; }
+        public string Localizador { get; set; }
+        public string ContenidoRetornado {  get; set; }
     }
 }

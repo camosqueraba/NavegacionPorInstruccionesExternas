@@ -5,6 +5,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using NavegacionPorInstruccionesExternas.DTOs;
+using RPASimulatorbank_CBZ.Controllers;
 #endregion
 
 namespace NavegacionPorInstruccionesExternas.Controller
@@ -14,10 +15,14 @@ namespace NavegacionPorInstruccionesExternas.Controller
         #region propiedades de clase
         private readonly string ArchivoConfiguracionesJson = ConfigurationManager.AppSettings["ArchivoConfiguracionesJson"];
         #endregion
-             
+
+        public GestorConfiguracionesExternas()
+        {
+                //GestorArchivos.ObtenerArchivoByUrl()
+        }
 
         #region leer configuraciones pdf
-        public ConfiguracionesNavegacion LeerConfiguracionesNavegacion()
+        public  ConfiguracionesNavegacion LeerConfiguracionesNavegacion()
         {
             try
             {

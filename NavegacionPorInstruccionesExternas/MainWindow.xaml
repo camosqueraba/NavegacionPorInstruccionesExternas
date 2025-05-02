@@ -4,9 +4,58 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NavegacionPorInstruccionesExternas"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Height="450" Width="800"
+        Closing="CerrarVentana">
     <Grid>
+        <Border Background="{StaticResource color_fondo_body}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <!--#region Contenido principal-->
+                <Grid x:Name="contenedor" Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="barra_menu" Grid.Row="0">
+                       
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid x:Name="GridPrincipal1" Visibility="Visible">
+                            <ScrollViewer x:Name="scrl_Principal" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" Margin="10">
+                                <Grid x:Name="GRD_Principal"/>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region Barra inferior-->
+                <Grid Grid.Row="1">
+                    <Border Background="{StaticResource principal_konecta}"  BorderBrush="{StaticResource principal_konecta}">
+                        <StackPanel Orientation="Horizontal" Margin="10, 0" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Account" Width="15" Height="15" VerticalAlignment="Center" Foreground="White"/>
+                            <Label x:Name="lbl_nombre_usuario" FontSize="14" Foreground="White" VerticalAlignment="Center"/>
+
+                            <materialDesign:PackIcon Kind="Monitor" Width="15" Height="15" VerticalAlignment="Center" Foreground="White"/>
+                            <Label x:Name="lbl_informacion_maquina" FontSize="14" Foreground="White"  VerticalAlignment="Center"/>
+
+                            <materialDesign:PackIcon Kind="Calendar" Width="15" Height="15" VerticalAlignment="Center" Foreground="White"/>
+                            <Label x:Name="lbl_fecha"   FontSize="14"  Foreground="White"  VerticalAlignment="Center"/>
+
+                            <materialDesign:PackIcon Kind="ApplicationOutline" Width="15" Height="15" VerticalAlignment="Center" Foreground="White"/>
+                            <Label x:Name="lbl_vesion_proyecto" FontSize="14" Foreground="White"  VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <!--#endregion-->
+            </Grid>
+        </Border>
         <Button Content="Iniciar" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="Button_Click"/>
 
     </Grid>
