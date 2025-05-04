@@ -24,17 +24,19 @@ namespace NavegacionPorInstruccionesExternas.Controllers
                 foreach (var accionNavegacion in instruccionesNavegacion.AccionesNavegacion)
                 {
                     string tipoAccion = accionNavegacion.TipoAccion;
-
+                    By localizadorBy = EstableceLocalizador(accionNavegacion.TipoLocalizador, accionNavegacion.Localizador);
+                    
                     switch (tipoAccion)
                     {
                         case "visit":
                             SeleniumCommandsInstance.Visit(accionNavegacion.NombreLocalizador, new Uri(accionNavegacion.Localizador));
                             break;
 
-                        case "type":
-                            string tipoSelector = accionNavegacion.TipoLocalizador;
-                            string localizador = accionNavegacion.Localizador;
-                            By localizadorBy = EstableceLocalizador(tipoSelector, localizador); 
+                        case "click":
+                            SeleniumCommandsInstance.Click(accionNavegacion.NombreLocalizador, localizadorBy);
+                            break;
+
+                        case "type": 
                             SeleniumCommandsInstance.Type(accionNavegacion.NombreLocalizador, localizadorBy, accionNavegacion.TextoDigitado);
                             break;
                         default:
@@ -60,6 +62,10 @@ namespace NavegacionPorInstruccionesExternas.Controllers
 
                     case "name":
                         result = By.Name(localizador);
+                        break;
+
+                    case "css":
+                        result = By.CssSelector(localizador);
                         break;
 
                     default:

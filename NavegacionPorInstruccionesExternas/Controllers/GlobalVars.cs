@@ -20,7 +20,7 @@ namespace NavegacionPorInstruccionesExternas.Controllers
         public static string UsuarioRed { get; set; }
         public static string NombreMaquina { get; set; }
 
-        public static readonly string NombreProyecto = ConfigurationManager.AppSettings["NombreProyecto"];
+        public static readonly string NameRPA = ConfigurationManager.AppSettings["NameRPA"];
         public static readonly string VersionProject = ConfigurationManager.AppSettings["VersionProject"];
         public static readonly string TituloVentana = ConfigurationManager.AppSettings["TituloVentana"];
 

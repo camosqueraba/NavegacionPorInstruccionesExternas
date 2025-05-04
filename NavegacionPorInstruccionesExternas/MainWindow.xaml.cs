@@ -54,7 +54,7 @@ namespace NavegacionPorInstruccionesExternas
         {
             try
             {
-                MessageBoxResult result = MessageBox.Show("¿Desea cerrar el aplicativo?", GlobalVars.NombreProyecto, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("¿Desea cerrar el aplicativo?", GlobalVars.NameRPA, MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     Tiempo_Inicial = DateTime.Now;

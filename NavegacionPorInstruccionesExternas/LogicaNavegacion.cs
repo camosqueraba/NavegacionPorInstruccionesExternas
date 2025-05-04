@@ -46,7 +46,7 @@ namespace NavegacionPorInstruccionesExternas
         #endregion
 
         public void Navegar()
-        {
+         {
             GestorConfiguracionesExternas gestorConfiguracionesExternas = new GestorConfiguracionesExternas();
             ConfiguracionesNavegacion configuracionesNavegacion = gestorConfiguracionesExternas.LeerConfiguracionesNavegacion();
             InstruccionesNavegacion instruccionesNavegacion = configuracionesNavegacion.Navegaciones[0];
