@@ -29,7 +29,7 @@ namespace NavegacionPorInstruccionesExternas.Controllers
                     switch (tipoAccion)
                     {
                         case "visit":
-                            SeleniumCommandsInstance.Visit(accionNavegacion.NombreLocalizador, new Uri(accionNavegacion.Localizador));
+                            result = SeleniumCommandsInstance.Visit(accionNavegacion.NombreLocalizador, new Uri(accionNavegacion.Localizador));
                             break;
 
                         case "click":
@@ -38,6 +38,13 @@ namespace NavegacionPorInstruccionesExternas.Controllers
 
                         case "type": 
                             SeleniumCommandsInstance.Type(accionNavegacion.NombreLocalizador, localizadorBy, accionNavegacion.TextoDigitado);
+                            break;
+
+                        case "verificar-url":
+                            Uri url_original = new Uri(accionNavegacion.Localizador);
+                            Uri url = SeleniumCommandsInstance.GetCurrentUrl();
+                            if (url.AbsoluteUri == url_original.AbsoluteUri)
+                                result = true;
                             break;
                         default:
                             break;
