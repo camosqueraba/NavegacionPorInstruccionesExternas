@@ -23,12 +23,12 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid x:Name="barra_menu" Grid.Row="0">
-                       
+
                     </Grid>
                     <Grid Grid.Row="1">
                         <Grid x:Name="GridPrincipal1" Visibility="Visible">
                             <ScrollViewer x:Name="scrl_Principal" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" Margin="10">
-                                <Grid x:Name="GRD_Principal"/>
+
                             </ScrollViewer>
                         </Grid>
                     </Grid>
@@ -57,6 +57,6 @@
             </Grid>
         </Border>
         <Button Content="Iniciar" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="Button_Click"/>
-
+        <Label Content="{Binding Reporte }" Width="658" FontSize="15" Margin="71,253,71,133"/>
     </Grid>
 </Window>

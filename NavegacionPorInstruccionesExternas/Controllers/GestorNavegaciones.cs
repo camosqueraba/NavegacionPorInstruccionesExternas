@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
+using static NavegacionPorInstruccionesExternas.MainWindow;
 
 namespace NavegacionPorInstruccionesExternas.Controllers
 {
@@ -17,7 +18,7 @@ namespace NavegacionPorInstruccionesExternas.Controllers
               this.SeleniumCommandsInstance = seleniumCommands;  
         }
 
-        public bool EjecutarInstruccionesNavegacion(InstruccionesNavegacion instruccionesNavegacion)
+        public bool EjecutarInstruccionesNavegacion(InstruccionesNavegacion instruccionesNavegacion, ReportadorDeProgreso reportadorDeProgreso)
         {
             bool result = false;
             if (instruccionesNavegacion != null && instruccionesNavegacion.AccionesNavegacion.Count > 0) {
@@ -25,7 +26,8 @@ namespace NavegacionPorInstruccionesExternas.Controllers
                 {
                     string tipoAccion = accionNavegacion.TipoAccion;
                     By localizadorBy = EstableceLocalizador(accionNavegacion.TipoLocalizador, accionNavegacion.Localizador);
-                    
+
+                    reportadorDeProgreso(accionNavegacion.TipoAccion + " " + accionNavegacion.NombreLocalizador);
                     switch (tipoAccion)
                     {
                         case "visit":
@@ -38,6 +40,10 @@ namespace NavegacionPorInstruccionesExternas.Controllers
 
                         case "type": 
                             SeleniumCommandsInstance.Type(accionNavegacion.NombreLocalizador, localizadorBy, accionNavegacion.TextoDigitado);
+                            break;
+
+                        case "is-visible":
+                            SeleniumCommandsInstance.IsDisplayed(accionNavegacion.NombreLocalizador, localizadorBy);
                             break;
 
                         case "verificar-url":
@@ -81,5 +87,7 @@ namespace NavegacionPorInstruccionesExternas.Controllers
             }
             return result;
         }
+
+
     }
 }

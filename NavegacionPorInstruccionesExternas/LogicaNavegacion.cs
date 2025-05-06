@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static NavegacionPorInstruccionesExternas.MainWindow;
 
 namespace NavegacionPorInstruccionesExternas
 {
@@ -45,14 +46,14 @@ namespace NavegacionPorInstruccionesExternas
         }
         #endregion
 
-        public void Navegar()
+        public void Navegar(ReportadorDeProgreso reportadorDeProgreso)
          {
             GestorConfiguracionesExternas gestorConfiguracionesExternas = new GestorConfiguracionesExternas();
             ConfiguracionesNavegacion configuracionesNavegacion = gestorConfiguracionesExternas.LeerConfiguracionesNavegacion();
             InstruccionesNavegacion instruccionesNavegacion = configuracionesNavegacion.Navegaciones[0];
 
             GestorNavegaciones gestorNavegaciones = new GestorNavegaciones(SeleniumCommands);
-            gestorNavegaciones.EjecutarInstruccionesNavegacion(instruccionesNavegacion);
+            gestorNavegaciones.EjecutarInstruccionesNavegacion(instruccionesNavegacion, reportadorDeProgreso);
            /*
             GestorConfiguracionesExternas gestorConfiguracionesExternas = new GestorConfiguracionesExternas();
             ConfiguracionesNavegacion configuracionesNavegacion = gestorConfiguracionesExternas.LeerConfiguracionesNavegacion();

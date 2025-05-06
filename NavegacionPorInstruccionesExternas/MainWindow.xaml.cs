@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using NavegacionPorInstruccionesExternas.DTOs;
 using NavegacionPorInstruccionesExternas.Controller;
+using static NavegacionPorInstruccionesExternas.MainWindow;
 
 namespace NavegacionPorInstruccionesExternas
 {
@@ -28,6 +29,18 @@ namespace NavegacionPorInstruccionesExternas
     {
         public static DateTime Tiempo_Inicial { get; set; }
         public static string IdUnique { get; set; }
+        //public string Reporte { get; set; }
+
+        public delegate void ReportadorDeProgreso(string reporte);
+
+        private string reporte;
+
+        public string Reporte
+        {
+            get { return reporte; }
+            set { reporte = value; }
+        }
+
         public MainWindow()
         {
             this.Title = GlobalVars.TituloVentana;
@@ -46,6 +59,8 @@ namespace NavegacionPorInstruccionesExternas
             lbl_nombre_usuario.Content = usuarioRed + " ";
             lbl_informacion_maquina.Content = nombreMaquina + " " + direccionIP + " ";
             lbl_vesion_proyecto.Content = GlobalVars.VersionProject;
+
+            
         }
         
 
@@ -116,8 +131,13 @@ namespace NavegacionPorInstruccionesExternas
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
-            LogicaNavegacion.Instance.Navegar();
+            ReportadorDeProgreso reportadorDeProgreso = ReportarProgreso;
+            LogicaNavegacion.Instance.Navegar(reportadorDeProgreso);
+        }
+
+        public void ReportarProgreso(string reporte)
+        {
+            this.Reporte = reporte;
         }
     }
 }
