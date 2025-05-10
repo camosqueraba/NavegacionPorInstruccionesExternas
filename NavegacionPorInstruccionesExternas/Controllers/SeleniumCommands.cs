@@ -674,6 +674,32 @@ namespace NavegacionPorInstruccionesExternas.Controllers
                 return null;
             }
         }
+
+        public By EstableceLocalizador(string tipoLocalizador, string localizador)
+        {
+            By result = null;
+            if (!string.IsNullOrEmpty(tipoLocalizador))
+            {
+                switch (tipoLocalizador)
+                {
+                    case "id":
+                        result = By.Id(localizador);
+                        break;
+
+                    case "name":
+                        result = By.Name(localizador);
+                        break;
+
+                    case "css":
+                        result = By.CssSelector(localizador);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            return result;
+        }
         #endregion
     }
 }

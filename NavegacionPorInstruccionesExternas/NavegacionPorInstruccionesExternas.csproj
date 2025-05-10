@@ -115,6 +115,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ResultadoAccion.cs" />
+    <Compile Include="Models\ResultadoInstruccionesNavegacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

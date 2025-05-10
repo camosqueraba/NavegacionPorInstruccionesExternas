@@ -5,8 +5,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenQA.Selenium;
+
 using static NavegacionPorInstruccionesExternas.MainWindow;
+using NavegacionPorInstruccionesExternas.Models;
 
 namespace NavegacionPorInstruccionesExternas.Controllers
 {
@@ -18,75 +19,71 @@ namespace NavegacionPorInstruccionesExternas.Controllers
               this.SeleniumCommandsInstance = seleniumCommands;  
         }
 
-        public bool EjecutarInstruccionesNavegacion(InstruccionesNavegacion instruccionesNavegacion, ReportadorDeProgreso reportadorDeProgreso)
+        public ResultadosInstruccionesNavegacion EjecutarInstruccionesNavegacion(InstruccionesNavegacion instruccionesNavegacion, ReportadorDeProgreso reportadorDeProgreso)
         {
-            bool result = false;
+
+            ResultadosInstruccionesNavegacion resultadosInstruccionesNavegacion = new ResultadosInstruccionesNavegacion();
+            resultadosInstruccionesNavegacion.ResultadosAcciones = new List<ResultadoAccion>();
+            ResultadoAccion resultadoAccion = null;
+
             if (instruccionesNavegacion != null && instruccionesNavegacion.AccionesNavegacion.Count > 0) {
+                
                 foreach (var accionNavegacion in instruccionesNavegacion.AccionesNavegacion)
                 {
                     string tipoAccion = accionNavegacion.TipoAccion;
-                    By localizadorBy = EstableceLocalizador(accionNavegacion.TipoLocalizador, accionNavegacion.Localizador);
+                    var localizadorBy = SeleniumCommandsInstance.EstableceLocalizador(accionNavegacion.TipoLocalizador, accionNavegacion.Localizador);
+
+                    bool accionCompletada = false;
+                    string valorRetornadoStr = null;
+                    bool valorRetornadoBool = false;
 
                     reportadorDeProgreso(accionNavegacion.TipoAccion + " " + accionNavegacion.NombreLocalizador);
                     switch (tipoAccion)
                     {
-                        case "visit":
-                            result = SeleniumCommandsInstance.Visit(accionNavegacion.NombreLocalizador, new Uri(accionNavegacion.Localizador));
+                        case "visitar-url":
+                            accionCompletada = SeleniumCommandsInstance.Visit(accionNavegacion.NombreLocalizador, new Uri(accionNavegacion.Localizador));
                             break;
 
                         case "click":
-                            SeleniumCommandsInstance.Click(accionNavegacion.NombreLocalizador, localizadorBy);
+                            accionCompletada = SeleniumCommandsInstance.Click(accionNavegacion.NombreLocalizador, localizadorBy);
                             break;
 
-                        case "type": 
-                            SeleniumCommandsInstance.Type(accionNavegacion.NombreLocalizador, localizadorBy, accionNavegacion.TextoDigitado);
+                        case "digitar":
+                            accionCompletada = SeleniumCommandsInstance.Type(accionNavegacion.NombreLocalizador, localizadorBy, accionNavegacion.TextoDigitado);
                             break;
 
-                        case "is-visible":
-                            SeleniumCommandsInstance.IsDisplayed(accionNavegacion.NombreLocalizador, localizadorBy);
+                        case "obtener-texto":
+                            valorRetornadoStr = SeleniumCommandsInstance.GetText(accionNavegacion.NombreLocalizador, localizadorBy);
+                            break;
+
+                        case "es-visible":
+                            valorRetornadoBool = SeleniumCommandsInstance.IsDisplayed(accionNavegacion.NombreLocalizador, localizadorBy);
                             break;
 
                         case "verificar-url":
                             Uri url_original = new Uri(accionNavegacion.Localizador);
                             Uri url = SeleniumCommandsInstance.GetCurrentUrl();
                             if (url.AbsoluteUri == url_original.AbsoluteUri)
-                                result = true;
+                                valorRetornadoBool = true;
                             break;
+
                         default:
                             break;
                     }
+
+                    if (valorRetornadoBool || accionCompletada)
+                        accionCompletada = true;
+                    else
+                        resultadosInstruccionesNavegacion.InstruccionError = accionNavegacion.TipoAccion + " : " + accionNavegacion.NombreLocalizador;
+
+                    resultadoAccion = new ResultadoAccion(accionCompletada, valorRetornadoStr);
+                    resultadosInstruccionesNavegacion.ResultadosAcciones.Add(resultadoAccion);
                 }
 
             }
             
-            return result;
-        }
-
-        private By EstableceLocalizador(string tipoLocalizador, string localizador)
-        {
-            By result = null;
-            if (!string.IsNullOrEmpty(tipoLocalizador))
-            {
-                switch (tipoLocalizador)
-                {
-                    case "id":
-                        result = By.Id(localizador);
-                        break;
-
-                    case "name":
-                        result = By.Name(localizador);
-                        break;
-
-                    case "css":
-                        result = By.CssSelector(localizador);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-            return result;
-        }
+            return resultadosInstruccionesNavegacion;
+        }     
 
 
     }
