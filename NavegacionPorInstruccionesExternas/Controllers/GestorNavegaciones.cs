@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using static NavegacionPorInstruccionesExternas.MainWindow;
 using NavegacionPorInstruccionesExternas.Models;
+using System.Globalization;
 
 namespace NavegacionPorInstruccionesExternas.Controllers
 {
@@ -56,6 +57,11 @@ namespace NavegacionPorInstruccionesExternas.Controllers
                             valorRetornadoStr = SeleniumCommandsInstance.GetText(accionNavegacion.NombreLocalizador, localizadorBy);
                             break;
 
+                        case "comparar-texto":
+                            string textoRecuperado = SeleniumCommandsInstance.GetText(accionNavegacion.NombreLocalizador, localizadorBy);
+                            resultadoAccion = CompararTexto(textoRecuperado, accionNavegacion.ContenidoEsperado);
+                            break;
+
                         case "es-visible":
                             valorRetornadoBool = SeleniumCommandsInstance.IsDisplayed(accionNavegacion.NombreLocalizador, localizadorBy);
                             break;
@@ -85,6 +91,29 @@ namespace NavegacionPorInstruccionesExternas.Controllers
             return resultadosInstruccionesNavegacion;
         }     
 
+        private ResultadoAccion CompararTexto(string textoObtenido, string textoEsperado)
+        {
+            try
+            {
+                ResultadoAccion resultadoAccion = new ResultadoAccion();
 
+                if (textoObtenido != null && textoEsperado != null)
+                {
+                    resultadoAccion.Completado = true;
+
+                    if (textoObtenido == textoEsperado)
+                        resultadoAccion.ResultadoRetornado = textoObtenido;
+                    else
+                        resultadoAccion.ResultadoRetornado = "";
+                }
+
+                return resultadoAccion;
+            }
+            catch (Exception ex)
+            {
+                LOGRobotica.Controllers.LogApplication.LogWrite("GestorNavegaciones.CompararTexto == Exception: " + ex.Message.ToString(CultureInfo.CurrentCulture));
+                return null;
+            }
+        }
     }
 }
